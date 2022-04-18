@@ -105,3 +105,5 @@ xcuserdata/
 # End of https://www.toptal.com/developers/gitignore/api/cmake,c++,xcode,macos
 
 A00/build/
+
+A01/build/A01
