@@ -98,8 +98,6 @@ void makeModels() {
 
 
 
-
-
     //// M2 : Cylinder
     // Replace the code below, that creates a simple rotated square, with the one to create a cylinder.
 
@@ -107,7 +105,7 @@ void makeModels() {
     // vertices components (3 * number of vertices)
     int NSlices = 36;
     float radius = 1;
-    float height = 4;
+    float height = 2;
     float cx = 0, cy = 0, cz = 0;
         
     
@@ -118,30 +116,26 @@ void makeModels() {
     M2_vertices[1]  = cy + height/2;
     M2_vertices[2]  = cz;
     
-    int i;
-    int lastIndex;
-    for(i=0;i<NSlices;i++){
+    for(int i=0;i<NSlices;i++){
         M2_vertices[(i+1)*3 + 0] = cx + radius * cos((float) i / NSlices * 2.0 * M_PI); //x for the vertex
         M2_vertices[(i+1)*3 + 1] = cy + height/2; //y for the vertex
         M2_vertices[(i+1)*3 + 2] = cz + radius * sin((float) i / NSlices * 2.0 * M_PI); // z for the vertex
     }
     
-    lastIndex = i+1;
-    
     //Lower circle
-    M2_vertices[lastIndex*3 + 0]  = cx;
-    M2_vertices[lastIndex*3 + 1]  = cy - height/2;
-    M2_vertices[lastIndex*3 + 2]  = cz;
+    M2_vertices[(NSlices+1)*3 + 0]  = cx;
+    M2_vertices[(NSlices+1)*3 + 1]  = cy - height/2;
+    M2_vertices[(NSlices+1)*3 + 2]  = cz;
     
-    for(int i=0;i<NSlices;i++){
-        M2_vertices[(lastIndex + i+1)*3 + 0] = cx + radius * cos((float) i / NSlices * 2.0 * M_PI); //x for the vertex
-        M2_vertices[(lastIndex + i+1)*3 + 1] = cy - height/2; //y for the vertex
-        M2_vertices[(lastIndex + i+1)*3 + 2] = cz + radius * sin((float) i / NSlices * 2.0 * M_PI); // z for the vertex
+    for(int i=NSlices+1;i<2*NSlices+1;i++){
+        M2_vertices[(i+1)*3 + 0] = cx + radius * cos((float) (i-NSlices-1) / NSlices * 2.0 * M_PI); //x for the vertex
+        M2_vertices[(i+1)*3 + 1] = cy - height/2; //y for the vertex
+        M2_vertices[(i+1)*3 + 2] = cz + radius * sin((float) (i-NSlices-1) / NSlices * 2.0 * M_PI); // z for the vertex
     }
 
     // Resizes the indices array. Repalce the values with the correct number of
     // indices (3 * number of triangles)
-    M2_indices.resize(3 * NSlices * 4);
+    M2_indices.resize(3 * (NSlices * 4));
     
     
    for(int i=0;i<NSlices;i++){
@@ -150,34 +144,24 @@ void makeModels() {
         M2_indices[i*3+2]= (i+1) % NSlices + 1;
     }
     
-    
-    lastIndex = NSlices;
-    int secondCyrcleCenterIndex = NSlices + 1;
-    
-    for(int j=0;j<NSlices; j++){
-        M2_indices[(lastIndex + j)*3+0]= secondCyrcleCenterIndex;
-        M2_indices[(lastIndex + j)*3+1]= secondCyrcleCenterIndex + j + 1;
-        M2_indices[(lastIndex + j)*3+2]= ((j + 1) % NSlices + 1) + secondCyrcleCenterIndex;
-    }
-    lastIndex = lastIndex + NSlices;
-    
-    for(int i=0;i<NSlices; i++){
-        M2_indices[(lastIndex + i)*3+0]= (i+1);
-        M2_indices[(lastIndex + i)*3+1]= (i+1) % NSlices + 1;
-        M2_indices[(lastIndex + i)*3+2]= secondCyrcleCenterIndex + i+1;
-    }
-    lastIndex = lastIndex + NSlices;
-    
-    for(int i=0;i<NSlices; i++){
-        M2_indices[(lastIndex + i)*3+0]= (secondCyrcleCenterIndex+i+1);
-        M2_indices[(lastIndex + i)*3+1]= ((i+1) % NSlices + 1) + secondCyrcleCenterIndex;
-        M2_indices[(lastIndex + i)*3+2]= (i+1) % NSlices + 1;
+    for(int i=NSlices;i<2*NSlices;i++){
+        M2_indices[i*3+0]= NSlices + 1;
+        M2_indices[i*3+1]= i+2;
+        M2_indices[i*3+2]= ((i+1) % NSlices) + NSlices + 2;
     }
     
-  /*  for (int i = (3 * NSlices * 2) - 1; i >= 0; i--)
-        std::cout << M2_indices[i];*/
+    for(int i=0;i<NSlices;i++){
+        M2_indices[(2*NSlices + i)*3 + 0]= i+1;
+        M2_indices[(2*NSlices + i)*3 + 1]= (i+1) % NSlices + 1;
+        M2_indices[(2*NSlices + i)*3 + 2]= NSlices + i + 2;
+    }
     
-
+    for(int i=0;i<NSlices;i++){
+        M2_indices[(3*NSlices + i)*3 + 0]= NSlices + i + 2;
+        M2_indices[(3*NSlices + i)*3 + 1]= ((i+1) % NSlices) + NSlices + 2;
+        M2_indices[(3*NSlices + i)*3 + 2]= (i+1) % NSlices + 1;
+    }
+    
 
 
     //// M3 : Sphere
@@ -198,9 +182,9 @@ void makeModels() {
         teta = (float) j / sSLices * 2.0 * M_PI;
         for(int i=0;i<sSLices;i++){
             phi = (float) i / sSLices * 2.0 * M_PI;
-            M2_vertices[(j+i+1)*3 + 0] = sx + sRadius * sin(teta) * cos(phi); //x for the vertex
-            M2_vertices[(j+i+1)*3 + 1] = sy + sRadius * cos(teta); //y for the vertex
-            M2_vertices[(j+i+1)*3 + 2] = sz + sRadius * sin(teta) * sin(phi); // z for the vertex
+            M3_vertices[(j+i+1)*3 + 0] = sx + sRadius * sin(teta) * cos(phi); //x for the vertex
+            M3_vertices[(j+i+1)*3 + 1] = sy + sRadius * cos(teta); //y for the vertex
+            M3_vertices[(j+i+1)*3 + 2] = sz + sRadius * sin(teta) * sin(phi); // z for the vertex
         }
     }
 
