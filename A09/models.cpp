@@ -4,7 +4,7 @@ void makeModels() {
     //// M1 : Cube
     // Replace the code below, that creates a simple square, with the one to create a cube.
     
-    int sideLenght = 3.0;
+    int sideLenght = 2.0;
     float ox = -1.0, oy = -1.0, oz = -1.0;
     float lastx= ox,  lasty= oy,  lastz= oz;
 
@@ -88,7 +88,7 @@ void makeModels() {
     M1_indices[29] = 4;
         
     M1_indices[30] = 3;
-    M1_indices[31] = 4;
+    M1_indices[31] = 2;
     M1_indices[32] = 6;
 
     M1_indices[33] = 6;
