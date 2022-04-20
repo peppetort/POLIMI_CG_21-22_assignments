@@ -169,36 +169,89 @@ void makeModels() {
 
     // Resizes the vertices array. Repalce the values with the correct number of
     // vertices components (3 * number of vertices)
-    float sRadius = 1;
-    float sSLices = 4;
+    
+    
+    int sectorCount = 36;
+    int stackCount = 9;
+    float sRadius = 1.0;
+    
     float sx = 0.0, sy = 0.0, sz = 0.0;
+    float cRadius = 0;
+    float cHeight = sy + sRadius;
     
+    float heightDistance = (2*sRadius)/stackCount;
     
-    M3_vertices.resize(3 * (sSLices*sSLices*2 + 2));
+    M3_vertices.resize(3 * (sectorCount * stackCount));
     
-    float teta;
-    float phi;
-    for(int j=0;j<sSLices;j++){
-        teta = (float) j / sSLices * 2.0 * M_PI;
-        for(int i=0;i<sSLices;i++){
-            phi = (float) i / sSLices * 2.0 * M_PI;
-            M3_vertices[(j+i+1)*3 + 0] = sx + sRadius * sin(teta) * cos(phi); //x for the vertex
-            M3_vertices[(j+i+1)*3 + 1] = sy + sRadius * cos(teta); //y for the vertex
-            M3_vertices[(j+i+1)*3 + 2] = sz + sRadius * sin(teta) * sin(phi); // z for the vertex
+    for(int i=0; i<stackCount; i++){
+        if(i!=0){
+            cHeight = cHeight + heightDistance;
+            
+            if(i<9){
+                cRadius = cRadius + heightDistance;
+            }else if(i>9){
+                cRadius = cRadius - heightDistance;
+            }else{
+                cRadius = sRadius;
+            }
+        }
+        
+        M3_vertices[i]  = sx;
+        M3_vertices[i+1]  = cHeight;
+        M3_vertices[i+2]  = sz;
+        
+        for(int j=0;j<sectorCount;j++){
+            M3_vertices[(j+1)*3 + 0] = sx + cRadius * cos((float) j / sectorCount * 2.0 * M_PI); //x for the vertex
+            M3_vertices[(j+1)*3 + 1] = cHeight; //y for the vertex
+            M3_vertices[(j+1)*3 + 2] = sz + cRadius * sin((float) j / sectorCount * 2.0 * M_PI); // z for the vertex
         }
     }
-
+    
+    /*
+    for(int i=0;i<stackCount;i++){
+        if(i!=0){
+            cHeight = cHeight - (sRadius/stackCount);
+            
+            if(i<9){
+                cRadius = cRadius + (sRadius/stackCount);
+            }else if(i>9){
+                cRadius = cRadius - (sRadius/stackCount);
+            }else{
+                cRadius = sRadius;
+            }
+        }
+        
+        for(int j=0;j<sectorCount;j++){
+            M3_vertices[(i+j)*3 + 0] = sx + cRadius * cos((float) j / sectorCount * 2.0 * M_PI); //x for the vertex
+            M3_vertices[(i+j)*3 + 1] = cHeight; //y for the vertex
+            M3_vertices[(i+j)*3 + 2] = sz + cRadius * sin((float) j / sectorCount * 2.0 * M_PI); // z for the vertex
+        }
+    }
+*/
 
     // Resizes the indices array. Repalce the values with the correct number of
     // indices (3 * number of triangles)
-    M3_indices.resize(3);
+    M3_indices.resize(3 * sectorCount * stackCount * 2);
+    
+    for(int i=0;i<stackCount;i++){
+        for(int j=0;j<sectorCount;j++){
+            M3_indices[((i*sectorCount)+j)*3+0]= i*(sectorCount+1);
+            M3_indices[((i*sectorCount)+j)*3+1]= (i*(sectorCount+1))+j+1;
+            M3_indices[((i*sectorCount)+j)*3+2]= (i*(sectorCount+1))+j+1 % sectorCount + 1;
+        }
+    }
+    
+    
+    /*
 
-    // indices definitions
-    M3_indices[0] = 0;
-    M3_indices[1] = 1;
-    M3_indices[2] = 2;
-
-
+    for(int i=0;i<stackCount;i++){
+        for(int j=0;j<sectorCount;j++){
+            M3_indices[(j+i)*3 + 0]= (sectorCount*i)+j;
+            M3_indices[(j+i)*3 + 1]= (((sectorCount*i)+j+1) % sectorCount);
+            M3_indices[(j+i)*3 + 2]= (sectorCount*i) + sectorCount + j;
+        }
+    }
+     */
 
 
 
@@ -208,57 +261,36 @@ void makeModels() {
 
     //// M4 : Spring
     // Replace the code below, that creates a simple octahedron, with the one to create a spring.
-    M4_vertices.resize(3 * 6);
-
-    // Vertices definitions
-    M4_vertices[0]  =  0.0;
-    M4_vertices[1]  =  1.414;
-    M4_vertices[2]  = -1.0;
-    M4_vertices[3]  =  0.0;
-    M4_vertices[4]  = -1.414;
-    M4_vertices[5]  = -1.0;
-    M4_vertices[6]  = -1.0;
-    M4_vertices[7]  =  0.0;
-    M4_vertices[8]  = -2.0;
-    M4_vertices[9]  = -1.0;
-    M4_vertices[10] =  0.0;
-    M4_vertices[11] =  0.0;
-    M4_vertices[12] =  1.0;
-    M4_vertices[13] =  0.0;
-    M4_vertices[14] =  0.0;
-    M4_vertices[15] =  1.0;
-    M4_vertices[16] =  0.0;
-    M4_vertices[17] = -2.0;
-
-
-    // Resizes the indices array. Repalce the values with the correct number of
-    // indices (3 * number of triangles)
-    M4_indices.resize(3 * 8);
-
-    // indices definitions
-    M4_indices[0]  = 0;
-    M4_indices[1]  = 2;
-    M4_indices[2]  = 3;
-    M4_indices[3]  = 1;
-    M4_indices[4]  = 3;
-    M4_indices[5]  = 2;
-    M4_indices[6]  = 0;
-    M4_indices[7]  = 3;
-    M4_indices[8]  = 4;
-    M4_indices[9]  = 1;
-    M4_indices[10] = 4;
-    M4_indices[11] = 3;
-    M4_indices[12] = 0;
-    M4_indices[13] = 4;
-    M4_indices[14] = 5;
-    M4_indices[15] = 1;
-    M4_indices[16] = 5;
-    M4_indices[17] = 4;
-    M4_indices[18] = 0;
-    M4_indices[19] = 5;
-    M4_indices[20] = 2;
-    M4_indices[21] = 1;
-    M4_indices[22] = 2;
-    M4_indices[23] = 5;
+    
+    
+    
+    const int slices = 32;
+    const int step = 5;
+    float rounds = 4, thickness = 1;
+    
+    M4_vertices.resize(3 * ((rounds * 360 + step)*slices));
+    
+    for (int i = -slices; i <= rounds * 360 + step; i += step)
+    {
+        for (int j = 0; j < slices; j ++)
+        {
+            GLfloat t = (GLfloat)i / 360 + (GLfloat)j / slices * step / 360;
+            t = std::max(0.0f, std::min(rounds, t));
+            GLfloat a1 = t * M_PI * 2;
+            GLfloat a2 = (GLfloat)j / slices * M_PI * 2;
+            GLfloat d = radius + thickness * cos(a2);
+            M4_vertices.push_back(d * cos(a1));
+            M4_vertices.push_back(d * sin(a1));
+            M4_vertices.push_back(thickness * sin(a2) + height * t / rounds);
+        }
+    }
+    
+    M4_indices.resize(2 * (M4_vertices.size() / 3 - slices));
+    
+    for (int i = 0; i < M4_vertices.size() / 3 - slices; ++i)
+    {
+        M4_indices.push_back(i);
+        M4_indices.push_back(i + slices);
+    }
 }
 
