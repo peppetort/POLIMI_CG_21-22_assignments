@@ -1,4 +1,5 @@
-#version 450#extension GL_ARB_separate_shader_objects : enable
+#version 450
+#extension GL_ARB_separate_shader_objects : enable
 
 layout(location = 0) in vec3 fragPos;
 layout(location = 1) in vec3 fragNorm;
@@ -32,23 +33,33 @@ vec3 Lambert_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C) {
 	// vec3 V : view direction
 	// vec3 C : main color (diffuse color, or specular color)
 	
-	return C;
+	return C * max(dot(L, N), 0);
 }
 
 vec3 Oren_Nayar_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, float sigma) {
 	// Directional light direction
 	// additional parameter:
 	// float sigma : roughness of the material
-
-	return C;
+    vec3 LL = C * clamp(dot(L, N), 0, 1);
+    float A = 1 - 0.5 * (pow(sigma, 2)/(pow(sigma, 2) + 0.33));
+    float B = 0.45 * (pow(sigma, 2)/(pow(sigma, 2) + 0.09));
+    float teta_i = 1/cos(dot(L, N));
+    float teta_r = 1/cos(dot(V, N));
+    float alpha = max(teta_i, teta_r);
+    float beta = min(teta_i, teta_r);
+    vec3 v_i = normalize(L - dot(L,N)*N);
+    vec3 v_r = normalize(V - dot(V,N)*N);
+    float G = max(0, dot(v_i,v_r));
+	return LL*(A + B*G*sin(alpha)*tan(beta));
 }
 
 vec3 Phong_Specular_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, float gamma)  {
 	// Phong Specular BRDF model
 	// additional parameter:
 	// float gamma : exponent of the cosine term
+    vec3 r = 2*N * dot(L, N) - L;
 	
-	return vec3(0,0,0);
+	return C * pow(clamp(dot(V, r), 0, 1), gamma);
 }
 
 vec3 Toon_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, vec3 Cd, float thr) {
@@ -56,16 +67,20 @@ vec3 Toon_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, vec3 Cd, float thr) {
 	// additional parameters:
 	// vec3 Cd : color to be used in dark areas
 	// float thr : color threshold
-	
-	return C;
+    float x = dot(L, N);
+    
+    
+    return x >= thr ? C : x > 0 ? Cd : vec3(0,0,0);
 }
 
 vec3 Toon_Specular_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, float thr)  {
 	// Directional light direction
 	// additional parameter:
 	// float thr : color threshold
-
-	return vec3(0,0,0);
+    vec3 r = 2*N * dot(L, N) - L;
+    float x = dot(V, r);
+    
+    return x >= thr ? C : vec3(0,0,0);
 }
 
 

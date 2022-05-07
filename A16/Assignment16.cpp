@@ -36,7 +36,6 @@ const std::string SHADER_PATH = "/Users/peppetort/Desktop/Università/Computer G
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
-
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 
@@ -104,6 +103,8 @@ struct SingleText {
 	int start;
 	int len;
 };
+
+
 
 std::vector<SingleText> SceneText = {
 	{1, {"Lambert","","",""}, 0, 0},
