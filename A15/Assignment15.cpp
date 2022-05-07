@@ -51,7 +51,6 @@ const int MAX_FRAMES_IN_FLIGHT = 2;
 // see above
 #pragma GCC diagnostic pop
 
-
 const std::vector<const char*> validationLayers = {
 	"VK_LAYER_KHRONOS_validation"
 };
@@ -270,9 +269,6 @@ struct VertexDescriptor {
 		}
 	}
 };
-
-
-
 
 
 

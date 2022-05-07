@@ -39,17 +39,32 @@ vec3 point_light_dir(vec3 pos) {
 
 vec3 point_light_color(vec3 pos) {
 	// Point light color
-	return pow( (gubo.coneInOutDecayExp.z / length(gubo.lightPos - pos)) ,gubo.coneInOutDecayExp.w) * gubo.lightColor;
+    float beta = gubo.coneInOutDecayExp.w;
+    float g = gubo.coneInOutDecayExp.z;
+    vec3 l = gubo.lightColor;
+    
+	return l * pow(g/length(gubo.lightPos - pos) ,beta);
 }
 
 vec3 spot_light_dir(vec3 pos) {
 	// Spot light direction
-	return vec3(0.0f, 0.0f, 1.0f);
+	return normalize(gubo.lightPos - pos);
 }
 
 vec3 spot_light_color(vec3 pos) {
 	// Spot light color
-	return vec3(0.5f, 1.0f, 0.5f);
+    vec3 l = gubo.lightColor;
+    vec3 d = gubo.lightDir;
+    vec3 lx = normalize(gubo.lightPos - pos);
+    float c_in = gubo.coneInOutDecayExp.y;
+    float c_out = gubo.coneInOutDecayExp.x;
+    float c_alpha = dot(lx, d);
+    float beta = gubo.coneInOutDecayExp.w;
+    float g = gubo.coneInOutDecayExp.z;
+    
+    float dimming = clamp((c_alpha - c_out)/(c_in - c_out), 0, 1);
+    float decay = pow(g/length(gubo.lightPos - pos), beta);
+	return l * decay * dimming;
 }
 
 /**** To from here *****/
