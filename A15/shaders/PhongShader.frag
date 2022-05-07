@@ -34,12 +34,12 @@ vec3 direct_light_color(vec3 pos) {
 
 vec3 point_light_dir(vec3 pos) {
 	// Point light direction
-	return vec3(0.0f, 0.0f, 1.0f);
+	return normalize(gubo.lightPos - pos);
 }
 
 vec3 point_light_color(vec3 pos) {
 	// Point light color
-	return vec3(0.5f, 1.0f, 0.5f);
+	return pow( (gubo.coneInOutDecayExp.z / length(gubo.lightPos - pos)) ,gubo.coneInOutDecayExp.w) * gubo.lightColor;
 }
 
 vec3 spot_light_dir(vec3 pos) {
