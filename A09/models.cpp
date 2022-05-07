@@ -166,63 +166,63 @@ void makeModels() {
 
     //// M3 : Sphere
     // Replace the code below, that creates a simple triangle, with the one to create a sphere.
+    float xCircle, yCircle, zCircle, xyCircle;
+    float radiusCircle = 2.0f;
+    float stackCount = 48.0f; //24.0f;
+    float sectorCount = 144.0f; //72.0f;
+    float sectorStep = 2 * M_PI / sectorCount;
+    float stackStep = M_PI / stackCount;
+    float sectorAngle, stackAngle;
+    int valueOfArrayCircle = 0;
+    int valueOfSecondArrayCircle = 0;
+    int k1Circle, k2Circle;
     
-    int sectorCount = 36;
-    int stackCount = 9;
+    M3_vertices.resize(3 * stackCount * sectorCount * 2);
     
-    M3_vertices.resize(3 * ((sectorCount+1) * (stackCount+1)));
     
-    float sx = 0, sy = 0, sz = 0;
-    float sRadius = 1.0;
-    float teta, phi;
-    
-    M3_vertices[0] = sx;
-    M3_vertices[1] = sy;
-    M3_vertices[2] = sz;
-    
-
-    for(int i = 0; i <stackCount; i++){
-        //teta = M_PI / 2 - i * (M_PI / stackCount);
-        //teta = (float) (i-stackCount-1) / stackCount * M_PI;
-        teta = (float) M_PI + (M_PI / stackCount)*(i+1);
+    for(int i=0;i<=stackCount;i++){
+        stackAngle = M_PI / 2 - i * stackStep;
+        xyCircle = radiusCircle * cos(stackAngle);
+        zCircle = radiusCircle * sin(stackAngle);
         
-        for(int j = 0; j < sectorCount; j++){
-            //phi = j * (2 * M_PI / sectorCount);
-            //phi = ((2 * M_PI) / (sectorCount-i)) * j;
-            phi = (float) ((2 * M_PI) / sectorCount) * (j+1);
-            //phi = (float) (j-sectorCount-1) / sectorCount * 2.0 * M_PI;
+        for(int j=0;j<=sectorCount;j++){
+            sectorAngle = j * sectorStep;
             
-            M3_vertices[((i*3 + j)+1)*3 + 0] = sx + sRadius * sin(teta) * cos(phi);
-            M3_vertices[((i*3 + j)+1)*3 + 1] = sy + sRadius * sin(teta);
-            M3_vertices[((i*3 + j)+1)*3 + 2] = sz + sRadius * sin(teta) * sin(phi);
+            xCircle = xyCircle * cos(sectorAngle);
+            yCircle = xyCircle * sin(sectorAngle);
+            M3_vertices[(valueOfArrayCircle * 3) + 0] = xCircle;
+            M3_vertices[(valueOfArrayCircle * 3) + 1] = yCircle;
+            M3_vertices[(valueOfArrayCircle * 3) + 2] = zCircle;
+            valueOfArrayCircle++;
         }
     }
-
-    // Resizes the indices array. Repalce the values with the correct number of
-    // indices (3 * number of triangles)
-    M3_indices.resize(3 * sectorCount * stackCount);
     
-    /*
-    for(int i = 0; i < stackCount; i++){
-        for(int j = 0; j < sectorCount; j++){
-            M3_indices[(i*3 + j)*3 + 0] = (i*sectorCount) + j;
-            M3_indices[(i*3 + j)*3 + 1] = ((j+1) % sectorCount) + sectorCount*i;
-            M3_indices[(i*3 + j)*3 + 2] = (i*sectorCount) + j + sectorCount;
-        }
-    }
-     */
+    M3_indices.resize(3 * stackCount * sectorCount * 2);
     
-    for(int i = 0; i < stackCount; i++){
-        for(int j = 0; j < sectorCount; j++){
-            M3_indices[(i*3 + j)*3 + 0] = 0;
-            M3_indices[(i*3 + j)*3 + 1] = ((j+1) % sectorCount) + sectorCount*i + 1;
-            M3_indices[(i*3 + j)*3 + 2] = (i*sectorCount) + j + 1;
+    for(int i=0;i<stackCount;i++){
+        k1Circle = i * (sectorCount + 1);
+        k2Circle = k1Circle + sectorCount + 1;
+        
+        for(int j=0;j<sectorCount;j++, k1Circle++, k2Circle++){
+            if(i != 0){
+                M3_indices[valueOfSecondArrayCircle] = k1Circle;
+                valueOfSecondArrayCircle++;
+                M3_indices[valueOfSecondArrayCircle] = k2Circle;
+                valueOfSecondArrayCircle++;
+                M3_indices[valueOfSecondArrayCircle] = k1Circle + 1;
+                valueOfSecondArrayCircle++;
+            }
+            
+            if(i != stackCount -1){
+                M3_indices[valueOfSecondArrayCircle] = k1Circle + 1;
+                valueOfSecondArrayCircle++;
+                M3_indices[valueOfSecondArrayCircle] = k2Circle;
+                valueOfSecondArrayCircle++;
+                M3_indices[valueOfSecondArrayCircle] = k2Circle + 1;
+                valueOfSecondArrayCircle++;
+            }
         }
     }
-
-
-
-
 
     //// M4 : Spring
     // Replace the code below, that creates a simple octahedron, with the one to create a spring.
