@@ -37,6 +37,7 @@ const std::string SHADER_PATH = "/Users/peppetort/Desktop/Università/Computer G
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
 
+
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 

@@ -24,12 +24,12 @@ layout(binding = 2) uniform GlobalUniformBufferObject {
 
 vec3 direct_light_dir(vec3 pos) {
 	// Directional light direction
-	return vec3(0.0f, 0.0f, 1.0f);
+	return gubo.lightDir;
 }
 
 vec3 direct_light_color(vec3 pos) {
 	// Directional light color
-	return vec3(0.5f, 1.0f, 0.5f);
+	return gubo.lightColor;
 }
 
 vec3 point_light_dir(vec3 pos) {
