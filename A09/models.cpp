@@ -228,34 +228,42 @@ void makeModels() {
     // Replace the code below, that creates a simple octahedron, with the one to create a spring.
     
     
+    int nSSlices = 36;
+    float steps = 100;
+    float r = 1; //cylinder radius
+    float R = 2; //distance from the center of cylinder from center of the spring
+    float P = 1; //speed of movment
+    float n = 4; //number of rounds
+    float t = 0.f;
     
-    const int slices = 32;
-    const int step = 5;
-    float rounds = 4, thickness = 1;
+    float sCx = 0, sCy = 0, sCz = 0;
     
-    M4_vertices.resize(3 * ((rounds * 360 + step)*slices));
+        
     
-    for (int i = -slices; i <= rounds * 360 + step; i += step)
-    {
-        for (int j = 0; j < slices; j ++)
-        {
-            GLfloat t = (GLfloat)i / 360 + (GLfloat)j / slices * step / 360;
-            t = std::max(0.0f, std::min(rounds, t));
-            GLfloat a1 = t * M_PI * 2;
-            GLfloat a2 = (GLfloat)j / slices * M_PI * 2;
-            GLfloat d = radius + thickness * cos(a2);
-            M4_vertices.push_back(d * cos(a1));
-            M4_vertices.push_back(d * sin(a1));
-            M4_vertices.push_back(thickness * sin(a2) + height * t / rounds);
+    M4_vertices.resize(3 * (steps * nSSlices));
+    
+    
+    for(int i=0;i<steps;i++){
+        t = (float) i / steps * 2.0 * M_PI;
+        sCx = R * cos(t);
+        sCy = 2 * t;
+        sCy = R * sin(t);
+        for(int j=0;j<nSSlices;i++){
+            M4_vertices[j*3 + i + 0] = sCx + r * cos((float) j / nSSlices * 2.0 * M_PI); //x for the vertex
+            M4_vertices[j*3 + i + 1] = sCy; //y for the vertex
+            M4_vertices[j*3 + i + 2] = sCz + r * sin((float) j / nSSlices * 2.0 * M_PI); // z for the vertex
         }
     }
     
-    M4_indices.resize(2 * (M4_vertices.size() / 3 - slices));
+    M4_indices.resize(3 * (steps*nSSlices));
     
-    for (int i = 0; i < M4_vertices.size() / 3 - slices; ++i)
-    {
-        M4_indices.push_back(i);
-        M4_indices.push_back(i + slices);
+    for(int i=0;i<steps;i++){
+        for(int j=0;i<nSSlices;j++){
+            M4_indices[i*j*3+0]= i*j;
+            M4_indices[i*j*3+1]= i*j + nSSlices;
+            M4_indices[i*j*3+2]= ((i*j+1) % nSSlices) + nSSlices*i*j + 2;
+        }
     }
+
 }
 
