@@ -230,11 +230,11 @@ void makeModels() {
     
     int nSSlices = 36;
     float steps = 100;
-    float r = 1; //cylinder radius
-    float R = 2; //distance from the center of cylinder from center of the spring
-    float P = 1; //speed of movment
-    float n = 4; //number of rounds
+    float r = 0.5; //cylinder radius
+    float R = 4; //distance from the center of cylinder from center of the spring
     float t = 0.f;
+    int n = 4; // number of rounds
+    float d = 2; //distance between rounds
     
     float sCx = 0, sCy = 0, sCz = 0;
     
@@ -244,24 +244,35 @@ void makeModels() {
     
     
     for(int i=0;i<steps;i++){
-        t = (float) i / steps * 2.0 * M_PI;
+        t = (float) i / steps*n * 2.0 * M_PI;
         sCx = R * cos(t);
-        sCy = 2 * t;
-        sCy = R * sin(t);
-        for(int j=0;j<nSSlices;i++){
-            M4_vertices[j*3 + i + 0] = sCx + r * cos((float) j / nSSlices * 2.0 * M_PI); //x for the vertex
-            M4_vertices[j*3 + i + 1] = sCy; //y for the vertex
-            M4_vertices[j*3 + i + 2] = sCz + r * sin((float) j / nSSlices * 2.0 * M_PI); // z for the vertex
+        sCy = (d * t) / M_PI;
+        sCz = R * sin(t);
+        for(int j=0;j<nSSlices;j++){
+            M4_vertices[j*3 + i*nSSlices*3 + 0] = sCx + r * cos((float) j / nSSlices * 2.0 * M_PI) * cos(t); //x for the vertex
+            M4_vertices[j*3 + i*nSSlices*3 + 1] = sCy +  r * sin((float) j / nSSlices * 2.0 * M_PI); //y for the vertex
+            M4_vertices[j*3 + i*nSSlices*3 + 2] = sCz + r * cos((float) j / nSSlices * 2.0 * M_PI) * sin(t); // z for the vertex
         }
     }
     
-    M4_indices.resize(3 * (steps*nSSlices));
+    M4_indices.resize(3 * (steps * nSSlices) * 2);
     
-    for(int i=0;i<steps;i++){
-        for(int j=0;i<nSSlices;j++){
-            M4_indices[i*j*3+0]= i*j;
-            M4_indices[i*j*3+1]= i*j + nSSlices;
-            M4_indices[i*j*3+2]= ((i*j+1) % nSSlices) + nSSlices*i*j + 2;
+    int lastVal = 0;
+    
+    for(int i=0;i<steps-1;i++){
+        for(int j=0;j<nSSlices;j++){
+            M4_indices[j*3 + i*nSSlices*3 + 0]= j + i*nSSlices;
+            M4_indices[j*3 + i*nSSlices*3 + 1]= j + i*nSSlices + nSSlices;
+            M4_indices[j*3 + i*nSSlices*3 + 2]= ((j+1) % nSSlices) + nSSlices*i;
+        }
+        lastVal = i*nSSlices*3;
+    }
+    
+    for(int i=0;i<steps-1;i++){
+        for(int j=0;j<nSSlices;j++){
+            M4_indices[j*3 + (steps+i)*nSSlices*3 + 0]= j + i*nSSlices + nSSlices;
+            M4_indices[j*3 + (steps+i)*nSSlices*3 + 1]= ((j+1) % nSSlices) + nSSlices*i + nSSlices;
+            M4_indices[j*3 + (steps+i)*nSSlices*3 + 2]= ((j+1) % nSSlices) + nSSlices*i;
         }
     }
 
