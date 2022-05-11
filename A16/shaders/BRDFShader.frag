@@ -40,16 +40,20 @@ vec3 Oren_Nayar_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, float sigma) {
 	// Directional light direction
 	// additional parameter:
 	// float sigma : roughness of the material
-    vec3 LL = C * clamp(dot(L, N), 0, 1);
-    float A = 1 - 0.5 * (pow(sigma, 2)/(pow(sigma, 2) + 0.33));
-    float B = 0.45 * (pow(sigma, 2)/(pow(sigma, 2) + 0.09));
-    float teta_i = 1/cos(dot(L, N));
-    float teta_r = 1/cos(dot(V, N));
-    float alpha = max(teta_i, teta_r);
-    float beta = min(teta_i, teta_r);
     vec3 v_i = normalize(L - dot(L,N)*N);
     vec3 v_r = normalize(V - dot(V,N)*N);
     float G = max(0, dot(v_i,v_r));
+    
+    vec3 LL = C * clamp(dot(L, N), 0, 1);
+    
+    float A = 1 - 0.5f * (pow(sigma, 2)/(pow(sigma, 2) + 0.33f));
+    float B = 0.45f * (pow(sigma, 2)/(pow(sigma, 2) + 0.09f));
+    
+    float teta_i = cos(dot(L, N));
+    float teta_r = cos(dot(L, V));
+    float alpha = max(teta_i, teta_r);
+    float beta = min(teta_i, teta_r);
+    
 	return LL*(A + B*G*sin(alpha)*tan(beta));
 }
 
