@@ -243,6 +243,7 @@ struct VertexDescriptor {
 			return glm::vec3(0.0f);
 			std::cerr << "Vertex has no normal \n";
 		}
+        
 	}
 	
 	void setNormal(float *data, int i, glm::vec3 norm) {
@@ -263,6 +264,8 @@ struct VertexDescriptor {
 			std::cerr << "Vertex has no UV \n";
 		}
 	}
+    
+    
 	
 	void setTexCoord(float *data, int i, glm::vec3 uv) {
 		if(hasNormal) {
