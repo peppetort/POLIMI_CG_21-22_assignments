@@ -276,10 +276,6 @@ struct VertexDescriptor {
 
 
 
-
-
-
-
 struct CharData {
 	int x;
 	int y;
