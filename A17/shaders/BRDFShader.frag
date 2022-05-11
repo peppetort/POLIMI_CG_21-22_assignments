@@ -49,8 +49,6 @@ vec3 Case1_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca, float sigma) {
 	// float sigma : roughness of the material
     
     vec3 lx = gubo.lightDir0;
-    vec3 l = gubo.lightColor0;
-    vec3 la = gubo.AmbColor;
     
     // Oren Nayar Diffuse
     vec3 v_i = normalize(lx - dot(lx,N)*N);
@@ -59,26 +57,26 @@ vec3 Case1_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca, float sigma) {
     
     vec3 L = Cd * clamp(dot(lx, N), 0, 1);
     
-    float A = 1 - 0.5 * (pow(sigma, 2)/(pow(sigma, 2) + 0.33));
-    float B = 0.45 * (pow(sigma, 2)/(pow(sigma, 2) + 0.09));
+    float A = 1 - 0.5f * (pow(sigma, 2)/(pow(sigma, 2) + 0.33f));
+    float B = 0.45f * (pow(sigma, 2)/(pow(sigma, 2) + 0.09f));
     
-    float teta_i = 1/cos(dot(lx, N));
-    float teta_r = 1/cos(dot(lx, N));
+    float teta_i = cos(dot(lx, N));
+    float teta_r = cos(dot(lx, V));
     float alpha = max(teta_i, teta_r);
     float beta = min(teta_i, teta_r);
     
     vec3 F_diffuse = L*(A + B*G*sin(alpha)*tan(beta));
     
-    //BDFR function
-    vec3 F_BDFR = F_diffuse;
+    //BRDF function
+    vec3 F_BRDF = F_diffuse;
     
     //Ligt model
-    vec3 L_model = l;
+    vec3 L_model = gubo.lightColor0;
     
     //Ambient light model
-    vec3 L_amb = Ca * la;
+    vec3 L_amb = gubo.AmbColor * Ca;
     
-	return L_model * F_BDFR + L_amb;
+	return L_model * F_BRDF + L_amb;
 }
 
 vec3 Case2_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca) {
@@ -93,10 +91,27 @@ vec3 Case2_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca) {
 	// vec3 V : view direction
 	// vec3 Cd : main color (diffuse color)
 	// vec3 Ca : ambient color
-
+    
+    vec3 lx = gubo.lightDir0;
+    vec3 l = gubo.lightColor0;
+    
+    //Lambert diffuse
+    vec3 F_diffuse = Cd * max(dot(lx, N), 0);
+    
+    //BRDF function
+    vec3 F_BDFR = F_diffuse;
+    
+    //Light model
+    vec3 L_model = l;
+    
+    //Hemispheric light model
+    vec3 ld = gubo.AmbColor;
+    vec3 lu = gubo.TopColor;
 	vec3 HemiDir = vec3(0.0f, 1.0f, 0.0f);
-	
-	return Ca;
+    
+    vec3 L_amb = (((dot(N, HemiDir)+1)/2)*lu + ((1-dot(N,HemiDir))/2)*ld)*Ca;
+    
+	return L_model * F_BDFR + L_amb;
 }
 
 vec3 Case3_Color(vec3 N, vec3 V, vec3 Cs, vec3 Ca, float gamma)  {
@@ -111,9 +126,26 @@ vec3 Case3_Color(vec3 N, vec3 V, vec3 Cs, vec3 Ca, float gamma)  {
 	// vec3 Cs : specular color
 	// vec3 Ca : ambient color
 	// float gamma : Blinn exponent
-	
-	return Ca;
+    
+    //BRDF Blinn specular model
+    vec3 blinn_0 = Cs * pow(clamp(dot(N, normalize(gubo.lightDir0 + V)), 0, 1), gamma);
+    vec3 blinn_1 = Cs * pow(clamp(dot(N, normalize(gubo.lightDir1 + V)), 0, 1), gamma);
+    vec3 blinn_2 = Cs * pow(clamp(dot(N, normalize(gubo.lightDir2 + V)), 0, 1), gamma);
+    vec3 blinn_3 = Cs * pow(clamp(dot(N, normalize(gubo.lightDir3 + V)), 0, 1), gamma);
+    
+    //Light model
+    vec3 dir_light_0 = gubo.lightColor0;
+    vec3 dir_light_1 = gubo.lightColor1;
+    vec3 dir_light_2 = gubo.lightColor2;
+    vec3 dir_light_3 = gubo.lightColor3;
+    
+    //Harmonics model
+    vec3 F_amb = gubo.AmbColor + N.x * gubo.DxColor + N.y * gubo.TopColor + N.z * gubo.DzColor;
+    vec3 L_amb = Ca * F_amb;
+    
+    return (blinn_0 * dir_light_0 + blinn_1 * dir_light_1 + blinn_2 * dir_light_2 + blinn_3 * dir_light_3) + L_amb;
 }
+
 
 
 

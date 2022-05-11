@@ -68,7 +68,6 @@ const std::vector<const char*> deviceExtensions = {
 	const bool Verbose = true;
 #endif
 
-
 enum ModelType {OBJ, GLTF};
 
 struct Model {
@@ -95,6 +94,8 @@ const std::vector<SkyBoxModel> SkyBoxToLoad = {
 	{"SkyBoxCube.obj", OBJ, {"sky4/bkg1_right.png", "sky4/bkg1_left.png", "sky4/bkg1_top.png", "sky4/bkg1_bot.png", "sky4/bkg1_front.png", "sky4/bkg1_back.png"}},	{"SkyBoxCube.obj", OBJ, {"sky1/posx.jpg", "sky1/negx.jpg", "sky1/posy.jpg", "sky1/negy.jpg", "sky1/posz.jpg", "sky1/negz.jpg"}},
 	{"SkyBoxCube.obj", OBJ, {"sky2/posx.jpg", "sky2/negx.jpg", "sky2/posy.jpg", "sky2/negy.jpg", "sky2/posz.jpg", "sky2/negz.jpg"}}
 	};
+
+
 
 struct SingleText {
 	int usedLines;
