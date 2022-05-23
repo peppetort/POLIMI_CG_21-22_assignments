@@ -188,36 +188,132 @@ void makeModels() {
 
     // Resizes the vertices array. Repalce the values with the correct number of
     // vertices
-    M2_vertices.resize(4);
+    int NSlices = 36;
+    float radius = 1;
+    float height = 3;
+    float cx = 0, cy = 0, cz = 0;
+    
+    int baseIndex = 0;
+        
+    
+    M2_vertices.resize(NSlices * 4 + 2);
 
-    // Vertices definitions
-    M2_vertices[0].pos  = glm::vec3(0.0,-1.0,-1.1);
-    M2_vertices[0].norm = glm::vec3(0.0,0.0,1.0);
-    M2_vertices[0].UV   = glm::vec2(0.0,1.0);
-
-    M2_vertices[1].pos  = glm::vec3(1.0,0.0,-1.1);
-    M2_vertices[1].norm = glm::vec3(0.0,0.0,1.0);
-    M2_vertices[1].UV   = glm::vec2(1.0,1.0);
-
-    M2_vertices[2].pos  = glm::vec3(0.0,1.0,-1.1);
-    M2_vertices[2].norm = glm::vec3(0.0,0.0,1.0);
-    M2_vertices[2].UV   = glm::vec2(1.0,0.0);
-
-    M2_vertices[3].pos  = glm::vec3(-1.0,0.0,-1.1);
-    M2_vertices[3].norm = glm::vec3(0.0,0.0,1.0);
-    M2_vertices[3].UV   = glm::vec2(0.0,0.0);
-
+    // Upper circle
+    M2_vertices[baseIndex].pos = glm::vec3(cx, cy + height/2, cz);
+    M2_vertices[baseIndex].norm = glm::vec3(0, 1, 0);
+    M2_vertices[baseIndex].UV = glm::vec2(0.625, 0.125);
+    
+    baseIndex = 1;
+    
+    
+    for(int i=0;i<NSlices;i++){
+        float x = cx + radius * cos((float) i / NSlices * 2.0 * M_PI);
+        float y = cy + height/2;
+        float z = cz + radius * sin((float) i / NSlices * 2.0 * M_PI);
+        
+        float u = 0.625 + 0.125 * cos((float) i / NSlices * 2.0 * M_PI);
+        float v = 0.125 + 0.125 * sin((float) i / NSlices * 2.0 * M_PI);
+        
+        M2_vertices[baseIndex + i].pos = glm::vec3(x, y, z);
+        M2_vertices[baseIndex + i].norm = glm::vec3(0, 1, 0);
+        M2_vertices[baseIndex + i].UV = glm::vec2(u, v);
+    }
+    
+    baseIndex = NSlices + 1;
+    
+    //Lower circle
+    M2_vertices[baseIndex].pos = glm::vec3(cx, cy - height/2, cz);
+    M2_vertices[baseIndex].norm = glm::vec3(0, -1, 0);
+    M2_vertices[baseIndex].UV = glm::vec2(0.875, 0.125);
+      
+    baseIndex = NSlices + 2;
+    
+    for(int i=0;i<NSlices;i++){
+        float x = cx + radius * cos((float) i / NSlices * 2.0 * M_PI);
+        float y = cy - height/2;
+        float z = cz + radius * sin((float) i / NSlices * 2.0 * M_PI);
+        
+        float u = 0.875 + 0.125 * cos((float) i / NSlices * 2.0 * M_PI);
+        float v = 0.125 + 0.125 * sin((float) i / NSlices * 2.0 * M_PI);
+        
+        M2_vertices[baseIndex + i].pos = glm::vec3(x, y, z);
+        M2_vertices[baseIndex + i].norm = glm::vec3(0, -1, 0);
+        M2_vertices[baseIndex + i].UV = glm::vec2(u, v);
+    }
+    
+    baseIndex = 2*NSlices + 2;
+    
+    float step = 0.5 / NSlices;
+    float u = 0.5;
+    float v = 0.25;
+    for(int i=0;i<NSlices;i++){
+        float x = cx + radius * cos((float) i / NSlices * 2.0 * M_PI);
+        float y = cy + height/2;
+        float z = cz + radius * sin((float) i / NSlices * 2.0 * M_PI);
+        
+        if(i != 0 ){
+            u = u + step;
+        }
+        
+        float nx = cos((float) i / NSlices * 2.0 * M_PI);
+        float nz = sin((float) i / NSlices * 2.0 * M_PI);
+        
+        M2_vertices[baseIndex + i].pos = glm::vec3(x, y, z);
+        M2_vertices[baseIndex + i].norm = glm::vec3(nx, 0, nz);
+        M2_vertices[baseIndex + i].UV = glm::vec2(u, v);
+    }
+    
+    baseIndex = 3*NSlices + 2;
+    
+    u = 0.5;
+    v = 0.5;
+    for(int i=0;i<NSlices;i++){
+        float x = cx + radius * cos((float) i / NSlices * 2.0 * M_PI);
+        float y = cy - height/2;
+        float z = cz + radius * sin((float) i / NSlices * 2.0 * M_PI);
+        
+        if(i != 0 ){
+            u = u + step;
+        }
+        
+        float nx = cos((float) i / NSlices * 2.0 * M_PI);
+        float nz = sin((float) i / NSlices * 2.0 * M_PI);
+        
+        M2_vertices[baseIndex + i].pos = glm::vec3(x, y, z);
+        M2_vertices[baseIndex + i].norm = glm::vec3(nx, 0, nz);
+        M2_vertices[baseIndex + i].UV = glm::vec2(u, v);
+    }
+    
 
     // Resizes the indices array. Repalce the values with the correct number of
     // indices (3 * number of triangles)
-    M2_indices.resize(6);
+    M2_indices.resize(3 * (NSlices * 4));
+    
+    
+   for(int i=0;i<NSlices;i++){
+        M2_indices[i*3+0]= 0;
+        M2_indices[i*3+1]= i+1;
+        M2_indices[i*3+2]= (i+1) % NSlices + 1;
+    }
+    
 
-    // indices definitions
-    M2_indices[0] = 0;
-    M2_indices[1] = 1;
-    M2_indices[2] = 2;
-    M2_indices[3] = 2;
-    M2_indices[4] = 3;
-    M2_indices[5] = 0;
-
+    for(int i=NSlices;i<2*NSlices;i++){
+        M2_indices[i*3+0]= NSlices + 1;
+        M2_indices[i*3+1]= i+2;
+        M2_indices[i*3+2]= ((i+1) % NSlices) + NSlices + 2;
+    }
+    
+    for(int i=0;i<NSlices;i++){
+        M2_indices[(2*NSlices + i)*3 + 0]= 2*NSlices+2 + i;
+        M2_indices[(2*NSlices + i)*3 + 1]= ((i+1) % NSlices) + 2*NSlices+2;
+        M2_indices[(2*NSlices + i)*3 + 2]= 3*NSlices+2 + i;
+    }
+    
+    
+    for(int i=0;i<NSlices;i++){
+        M2_indices[(3*NSlices + i)*3 + 0]= 3*NSlices+2 + i;
+        M2_indices[(3*NSlices + i)*3 + 1]= ((i+1) % NSlices) + 3*NSlices+2;
+        M2_indices[(3*NSlices + i)*3 + 2]= ((i+1) % NSlices) + 2*NSlices+2;
+    }
+    
 }
