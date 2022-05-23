@@ -1,0 +1,324 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4AA332BD283B78AB00DDCD74 /* libvulkan.1.3.204.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA332BB283B78AB00DDCD74 /* libvulkan.1.3.204.dylib */; };
+		4AA332BE283B78AB00DDCD74 /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA332BC283B78AB00DDCD74 /* libvulkan.1.dylib */; };
+		4AA332C0283B78BC00DDCD74 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA332BF283B78BC00DDCD74 /* libglfw.3.3.dylib */; };
+		4AA332C1283B78C600DDCD74 /* libglfw.3.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4AA332BF283B78BC00DDCD74 /* libglfw.3.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4AA332C2283B78C600DDCD74 /* libvulkan.1.3.204.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4AA332BB283B78AB00DDCD74 /* libvulkan.1.3.204.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4AA332C3283B78C600DDCD74 /* libvulkan.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4AA332BC283B78AB00DDCD74 /* libvulkan.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4AA332C6283B78D100DDCD74 /* Assignment19.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AA332C4283B78D100DDCD74 /* Assignment19.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4AA332AE283B783100DDCD74 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4AA332C1283B78C600DDCD74 /* libglfw.3.3.dylib in CopyFiles */,
+				4AA332C2283B78C600DDCD74 /* libvulkan.1.3.204.dylib in CopyFiles */,
+				4AA332C3283B78C600DDCD74 /* libvulkan.1.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4AA332B0283B783100DDCD74 /* A19Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = A19Project; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AA332BB283B78AB00DDCD74 /* libvulkan.1.3.204.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.3.204.dylib; path = ../../../../../../VulkanSDK/1.3.204.0/macOS/lib/libvulkan.1.3.204.dylib; sourceTree = "<group>"; };
+		4AA332BC283B78AB00DDCD74 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../../../VulkanSDK/1.3.204.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
+		4AA332BF283B78BC00DDCD74 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../../../../opt/homebrew/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		4AA332C4283B78D100DDCD74 /* Assignment19.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Assignment19.cpp; path = ../../Assignment19.cpp; sourceTree = "<group>"; };
+		4AA332C5283B78D100DDCD74 /* models.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = models.cpp; path = ../../models.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4AA332AD283B783100DDCD74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AA332BD283B78AB00DDCD74 /* libvulkan.1.3.204.dylib in Frameworks */,
+				4AA332BE283B78AB00DDCD74 /* libvulkan.1.dylib in Frameworks */,
+				4AA332C0283B78BC00DDCD74 /* libglfw.3.3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4AA332A7283B783100DDCD74 = {
+			isa = PBXGroup;
+			children = (
+				4AA332B2283B783100DDCD74 /* A19Project */,
+				4AA332B1283B783100DDCD74 /* Products */,
+				4AA332BA283B78AB00DDCD74 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4AA332B1283B783100DDCD74 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4AA332B0283B783100DDCD74 /* A19Project */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4AA332B2283B783100DDCD74 /* A19Project */ = {
+			isa = PBXGroup;
+			children = (
+				4AA332C4283B78D100DDCD74 /* Assignment19.cpp */,
+				4AA332C5283B78D100DDCD74 /* models.cpp */,
+			);
+			path = A19Project;
+			sourceTree = "<group>";
+		};
+		4AA332BA283B78AB00DDCD74 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4AA332BF283B78BC00DDCD74 /* libglfw.3.3.dylib */,
+				4AA332BB283B78AB00DDCD74 /* libvulkan.1.3.204.dylib */,
+				4AA332BC283B78AB00DDCD74 /* libvulkan.1.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4AA332AF283B783100DDCD74 /* A19Project */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4AA332B7283B783100DDCD74 /* Build configuration list for PBXNativeTarget "A19Project" */;
+			buildPhases = (
+				4AA332AC283B783100DDCD74 /* Sources */,
+				4AA332AD283B783100DDCD74 /* Frameworks */,
+				4AA332AE283B783100DDCD74 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = A19Project;
+			productName = A19Project;
+			productReference = 4AA332B0283B783100DDCD74 /* A19Project */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4AA332A8283B783100DDCD74 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					4AA332AF283B783100DDCD74 = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 4AA332AB283B783100DDCD74 /* Build configuration list for PBXProject "A19Project" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4AA332A7283B783100DDCD74;
+			productRefGroup = 4AA332B1283B783100DDCD74 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4AA332AF283B783100DDCD74 /* A19Project */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4AA332AC283B783100DDCD74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AA332C6283B78D100DDCD74 /* Assignment19.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4AA332B5283B783100DDCD74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4AA332B6283B783100DDCD74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4AA332B8283B783100DDCD74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/Users/peppetort/VulkanSDK/1.3.204.0/macOS/include,
+					/opt/homebrew/include,
+					"/Users/peppetort/Desktop/Università/Computer\\ Graphics/Assignments/A19/headers",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/Users/peppetort/VulkanSDK/1.3.204.0/macOS/lib,
+					/opt/homebrew/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4AA332B9283B783100DDCD74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/Users/peppetort/VulkanSDK/1.3.204.0/macOS/include,
+					/opt/homebrew/include,
+					"/Users/peppetort/Desktop/Università/Computer\\ Graphics/Assignments/A19/headers",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/Users/peppetort/VulkanSDK/1.3.204.0/macOS/lib,
+					/opt/homebrew/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4AA332AB283B783100DDCD74 /* Build configuration list for PBXProject "A19Project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AA332B5283B783100DDCD74 /* Debug */,
+				4AA332B6283B783100DDCD74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4AA332B7283B783100DDCD74 /* Build configuration list for PBXNativeTarget "A19Project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AA332B8283B783100DDCD74 /* Debug */,
+				4AA332B9283B783100DDCD74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4AA332A8283B783100DDCD74 /* Project object */;
+}
