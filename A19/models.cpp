@@ -244,7 +244,7 @@ void makeModels() {
     baseIndex = 2*NSlices + 2;
     
     float step = 0.5 / NSlices;
-    float u = 0.5;
+    float u = 1;
     float v = 0.25;
     for(int i=0;i<NSlices;i++){
         float x = cx + radius * cos((float) i / NSlices * 2.0 * M_PI);
@@ -252,8 +252,9 @@ void makeModels() {
         float z = cz + radius * sin((float) i / NSlices * 2.0 * M_PI);
         
         if(i != 0 ){
-            u = u + step;
+            u = u - step;
         }
+    
         
         float nx = cos((float) i / NSlices * 2.0 * M_PI);
         float nz = sin((float) i / NSlices * 2.0 * M_PI);
@@ -265,7 +266,7 @@ void makeModels() {
     
     baseIndex = 3*NSlices + 2;
     
-    u = 0.5;
+    u = 1;
     v = 0.5;
     for(int i=0;i<NSlices;i++){
         float x = cx + radius * cos((float) i / NSlices * 2.0 * M_PI);
@@ -273,8 +274,9 @@ void makeModels() {
         float z = cz + radius * sin((float) i / NSlices * 2.0 * M_PI);
         
         if(i != 0 ){
-            u = u + step;
+            u = u - step;
         }
+    
         
         float nx = cos((float) i / NSlices * 2.0 * M_PI);
         float nz = sin((float) i / NSlices * 2.0 * M_PI);
