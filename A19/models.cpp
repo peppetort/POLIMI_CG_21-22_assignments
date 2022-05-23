@@ -196,7 +196,7 @@ void makeModels() {
     int baseIndex = 0;
         
     
-    M2_vertices.resize(NSlices * 4 + 2);
+    M2_vertices.resize(NSlices * 4 + 4);
 
     // Upper circle
     M2_vertices[baseIndex].pos = glm::vec3(cx, cy + height/2, cz);
@@ -266,6 +266,14 @@ void makeModels() {
     
     baseIndex = 3*NSlices + 2;
     
+    //same vertex in pos equal to the first but with different uv coordinate
+    
+    M2_vertices[baseIndex].pos = glm::vec3(cx + radius, cy + height/2, cz);
+    M2_vertices[baseIndex].norm = glm::vec3(1, 0, 0);
+    M2_vertices[baseIndex].UV = glm::vec2(0.5, v);
+    
+    baseIndex = 3*NSlices + 3;
+    
     u = 1;
     v = 0.5;
     for(int i=0;i<NSlices;i++){
@@ -286,6 +294,14 @@ void makeModels() {
         M2_vertices[baseIndex + i].UV = glm::vec2(u, v);
     }
     
+    baseIndex = 4*NSlices + 3;
+    
+    //same vertex in pos equal to the first but with different uv coordinate
+    
+    M2_vertices[baseIndex].pos = glm::vec3(cx + radius, cy - height/2, cz);
+    M2_vertices[baseIndex].norm = glm::vec3(1, 0, 0);
+    M2_vertices[baseIndex].UV = glm::vec2(0.5, v);
+    
 
     // Resizes the indices array. Repalce the values with the correct number of
     // indices (3 * number of triangles)
@@ -305,17 +321,25 @@ void makeModels() {
         M2_indices[i*3+2]= ((i+1) % NSlices) + NSlices + 2;
     }
     
-    for(int i=0;i<NSlices;i++){
+    for(int i=0;i<NSlices-1;i++){
         M2_indices[(2*NSlices + i)*3 + 0]= 2*NSlices+2 + i;
-        M2_indices[(2*NSlices + i)*3 + 1]= ((i+1) % NSlices) + 2*NSlices+2;
-        M2_indices[(2*NSlices + i)*3 + 2]= 3*NSlices+2 + i;
+        M2_indices[(2*NSlices + i)*3 + 1]= i+1 + 2*NSlices+2;
+        M2_indices[(2*NSlices + i)*3 + 2]= 3*NSlices+3 + i;
     }
     
+    M2_indices[(2*NSlices + NSlices-1)*3 + 0]= 2*NSlices+2 + NSlices-1;
+    M2_indices[(2*NSlices + NSlices-1)*3 + 1]= NSlices + 2*NSlices+2;
+    M2_indices[(2*NSlices + NSlices-1)*3 + 2]= 4*NSlices+2;
+
     
-    for(int i=0;i<NSlices;i++){
-        M2_indices[(3*NSlices + i)*3 + 0]= 3*NSlices+2 + i;
-        M2_indices[(3*NSlices + i)*3 + 1]= ((i+1) % NSlices) + 3*NSlices+2;
-        M2_indices[(3*NSlices + i)*3 + 2]= ((i+1) % NSlices) + 2*NSlices+2;
+    for(int i=0;i<NSlices-1;i++){
+        M2_indices[(3*NSlices + i)*3 + 0]= 3*NSlices+3 + i;
+        M2_indices[(3*NSlices + i)*3 + 1]= i+1 + 3*NSlices+3;
+        M2_indices[(3*NSlices + i)*3 + 2]= i+1 + 2*NSlices+2;
     }
+    
+    M2_indices[(3*NSlices + NSlices-1)*3 + 0]= 3*NSlices+3 + NSlices-1;
+    M2_indices[(3*NSlices + NSlices-1)*3 + 1]= NSlices + 3*NSlices+3;
+    M2_indices[(3*NSlices + NSlices-1)*3 + 2]= 3*NSlices+2;
     
 }
