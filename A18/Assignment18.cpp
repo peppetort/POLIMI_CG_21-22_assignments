@@ -30,6 +30,7 @@
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
+
 const std::string MODEL_PATH = "/Users/peppetort/Desktop/Università/Computer Graphics/Assignments/A18/models/";
 const std::string TEXTURE_PATH = "/Users/peppetort/Desktop/Università/Computer Graphics/Assignments/A18/textures/";
 const std::string SHADER_PATH = "/Users/peppetort/Desktop/Università/Computer Graphics/Assignments/A18/shaders/";
