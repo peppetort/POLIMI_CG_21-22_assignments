@@ -7,6 +7,8 @@ glm::mat4 PO1(float a) {
     glm::mat4 rot_45 = glm::rotate(glm::mat4(1), glm::radians(45.f), glm::vec3(0,1,0));
     glm::mat4 rot_35 = glm::rotate(glm::mat4(1), glm::radians(35.26f), glm::vec3(1,0,0));
     
+    // mirroring is to change the axis orientation convention (from world to 3d normalized). It is not
+    // included in glm::ortho that provides only the translation and the normalization
     glm::mat4 port = glm::scale(glm::mat4(1.0), glm::vec3(1,-1,1)) * glm::ortho(-w, w, -w/a, w/a, n, f);
     
     glm::mat4 out = port * rot_35 * rot_45;
@@ -40,6 +42,7 @@ glm::mat4 PO3(float a) {
 // Create a matrix for Cabinet projection (alpha = 45)
 // with the given aspect ration a
 glm::mat4 PO4(float a) {
+    // shear along z-axis with hx = -p * cos(alpha) hy = -p * sin(alpha)
     glm::mat4 shear_45 = glm::mat4(1,0,0,0,
                                    0,1,0,0,
                                    -0.5*cos(glm::radians(45.f)),-0.5*sin(glm::radians(45.f)),1,0,

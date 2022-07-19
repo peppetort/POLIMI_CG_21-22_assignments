@@ -6,6 +6,7 @@ float f = 9.9;
 glm::mat4 PO1(float a) {
     
     glm::mat4 Mlglm = glm::perspective(glm::radians(90.f), a, n, f);
+    // change axis convention from OpenGL to Vulkan
     Mlglm[1][1] *= -1;
     
     glm::mat4 out = Mlglm;
@@ -39,7 +40,7 @@ glm::mat4 PO3(float a) {
 // to match both the aspect ratio and the FovY
 glm::mat4 PO4(float a) {
     
-    float tan_v = tan(glm::radians(90.f/2));
+    float tan_v = tan(glm::radians(90.f)/2);
     
     float l = - a * n * tan_v;
     float b = - n * tan_v;

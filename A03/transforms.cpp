@@ -17,7 +17,6 @@ glm::mat4 scaling_2 = glm::scale(glm::mat4(1), glm::vec3(0.5));
 glm::mat4 translation_2 = glm::translate(glm::mat4(1), glm::vec3(5,0,-2));
 
 MT2 = translation_2 * scaling_2 * glm::inverse(translation_2);
-//MT2 = glm::translate(glm::scale(MT2, glm::vec3(0.5)), glm::vec3(5,0,-2));
            
 // Mirror the starship along a plane passing through (1,1,1), and obtained rotating 15 degree around the x axis the xz plane
 glm::mat4 MT3 = glm::mat4(1);

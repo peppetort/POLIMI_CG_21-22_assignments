@@ -137,25 +137,28 @@ void makeModels() {
     // indices (3 * number of triangles)
     M2_indices.resize(3 * (NSlices * 4));
     
-    
+    //connecting upper circle vertices to circle center
    for(int i=0;i<NSlices;i++){
         M2_indices[i*3+0]= 0;
         M2_indices[i*3+1]= i+1;
         M2_indices[i*3+2]= (i+1) % NSlices + 1;
     }
     
+    //connecting lower circle vertices to circle center
     for(int i=NSlices;i<2*NSlices;i++){
         M2_indices[i*3+0]= NSlices + 1;
         M2_indices[i*3+1]= i+2;
         M2_indices[i*3+2]= ((i+1) % NSlices) + NSlices + 2;
     }
     
+    //connecting point of two base circles. Half triangle for each face
     for(int i=0;i<NSlices;i++){
         M2_indices[(2*NSlices + i)*3 + 0]= i+1;
         M2_indices[(2*NSlices + i)*3 + 1]= (i+1) % NSlices + 1;
         M2_indices[(2*NSlices + i)*3 + 2]= NSlices + i + 2;
     }
     
+    //connecting point of two base circles. The missing half triangle for each face
     for(int i=0;i<NSlices;i++){
         M2_indices[(3*NSlices + i)*3 + 0]= NSlices + i + 2;
         M2_indices[(3*NSlices + i)*3 + 1]= ((i+1) % NSlices) + NSlices + 2;
@@ -242,9 +245,9 @@ void makeModels() {
     
     M4_vertices.resize(3 * (steps * nSSlices));
     
-    
     for(int i=0;i<steps;i++){
         t = (float) i / steps*n * 2.0 * M_PI;
+        //center of i circle 
         sCx = R * cos(t);
         sCy = (d * t) / M_PI;
         sCz = R * sin(t);

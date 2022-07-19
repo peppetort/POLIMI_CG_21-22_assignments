@@ -22,6 +22,10 @@ layout(binding = 2) uniform GlobalUniformBufferObject {
 
 /**** Modify from here *****/
 
+//DIRECT LIGHT
+// model light sources very far away from the object =>
+// uniformily influence the scene
+// due to distance we consider ray parallel and constant in color and intensity
 vec3 direct_light_dir(vec3 pos) {
 	// Directional light direction
 	return gubo.lightDir;
@@ -32,6 +36,9 @@ vec3 direct_light_color(vec3 pos) {
 	return gubo.lightColor;
 }
 
+// POINT LIGHT
+// light emitted from fixed point that emits light in all direction starting from a position
+// direction: vectror from object pos to light pos
 vec3 point_light_dir(vec3 pos) {
 	// Point light direction
 	return normalize(gubo.lightPos - pos);
@@ -39,13 +46,20 @@ vec3 point_light_dir(vec3 pos) {
 
 vec3 point_light_color(vec3 pos) {
 	// Point light color
+    
+    // decay factor
     float beta = gubo.coneInOutDecayExp.w;
+    // distance at which light reduction is 1
+    // intensity higher than l for distance < g and will decrese for longer distances
     float g = gubo.coneInOutDecayExp.z;
     vec3 l = gubo.lightColor;
     
 	return l * pow(g/length(gubo.lightPos - pos) ,beta);
 }
 
+// SPOT LIGHT
+// conic source with a direction and a position
+// two cone charaterized by 2 angles alpha_in alpha_out with differet intensity
 vec3 spot_light_dir(vec3 pos) {
 	// Spot light direction
 	return normalize(gubo.lightPos - pos);
@@ -56,10 +70,19 @@ vec3 spot_light_color(vec3 pos) {
     vec3 l = gubo.lightColor;
     vec3 d = gubo.lightDir;
     vec3 lx = normalize(gubo.lightPos - pos);
+    
+    // cosin of alpha_in
     float c_in = gubo.coneInOutDecayExp.y;
+    // cosin of alpha_out
     float c_out = gubo.coneInOutDecayExp.x;
+    // cosin of angle between light direction lx and direction if the spot d
     float c_alpha = dot(lx, d);
+    
+    // DECAY
+    //decay factori
     float beta = gubo.coneInOutDecayExp.w;
+    // distance at which light reduction is 1
+    // intensity higher than l for distance < g and will decrese for longer distances
     float g = gubo.coneInOutDecayExp.z;
     
     float dimming = clamp((c_alpha - c_out)/(c_in - c_out), 0, 1);
@@ -92,3 +115,4 @@ void main() {
 	
 	outColor = vec4((Diffuse + Specular) * lC, 1.0f);	
 }
+

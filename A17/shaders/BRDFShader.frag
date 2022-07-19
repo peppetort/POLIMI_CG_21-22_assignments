@@ -50,8 +50,13 @@ vec3 Case1_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca, float sigma) {
     
     vec3 lx = gubo.lightDir0;
     
-    // Oren Nayar Diffuse
+    // OREN-NAYER (diffuse reflection model)
+    // used for materials charaterized by retroreflection
+    // requires the normal vector of point x, the direction of the light and the direction of the viewer
+    
+    // projection of light direction (L) to the plane perpendiculat to normal vector (N)
     vec3 v_i = normalize(lx - dot(lx,N)*N);
+    // projection of viewer direction (V) to the plane perpendiculat to normal vector (N)
     vec3 v_r = normalize(V - dot(V,N)*N);
     float G = max(0, dot(v_i,v_r));
     
@@ -70,12 +75,17 @@ vec3 Case1_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca, float sigma) {
     //BRDF function
     vec3 F_BRDF = F_diffuse;
     
-    //Ligt model
+    // DIRECT LIGHT
+    // model light sources very far away from the object =>
+    // uniformily influence the scene
+    // due to distance we consider ray parallel and constant in color and intensity
     vec3 L_model = gubo.lightColor0;
     
-    //Ambient light model
+    // AMBIENT LIGHT
+    // indipendent to light direction
     vec3 L_amb = gubo.AmbColor * Ca;
     
+    // rendering equation
 	return L_model * F_BRDF + L_amb;
 }
 
@@ -95,16 +105,23 @@ vec3 Case2_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca) {
     vec3 lx = gubo.lightDir0;
     vec3 l = gubo.lightColor0;
     
-    //Lambert diffuse
+    // LAMBERT (diffuse reflection model)
+    // constant diffuse term
+    // each point of the object hit by a ray reflect it eith uniform probability in all directions
+    // N.B: the quantity of light is not costant but is proportional to the angle between the ray and the normal vector of the x point (depends on the reflecting surface)
     vec3 F_diffuse = Cd * max(dot(lx, N), 0);
     
     //BRDF function
     vec3 F_BDFR = F_diffuse;
     
-    //Light model
+    // DIRECT LIGHT
+    // model light sources very far away from the object =>
+    // uniformily influence the scene
+    // due to distance we consider ray parallel and constant in color and intensity
     vec3 L_model = l;
     
-    //Hemispheric light model
+    // HEMISPHERICAL LIGHT
+    // 2 ambient light color the upper (sky) and the lower (groud) + 1 direction vector
     vec3 ld = gubo.AmbColor;
     vec3 lu = gubo.TopColor;
 	vec3 HemiDir = vec3(0.0f, 1.0f, 0.0f);
@@ -127,7 +144,9 @@ vec3 Case3_Color(vec3 N, vec3 V, vec3 Cs, vec3 Ca, float gamma)  {
 	// vec3 Ca : ambient color
 	// float gamma : Blinn exponent
     
-    //BRDF Blinn specular model
+    // BRDF BLIN ( specular reflection model)
+    // similat to Phong but use the half vector h between view direction and light direction and tha angle between h and normal
+    // one BLIN model for each light
     vec3 blinn_0 = Cs * pow(clamp(dot(N, normalize(gubo.lightDir0 + V)), 0, 1), gamma);
     vec3 blinn_1 = Cs * pow(clamp(dot(N, normalize(gubo.lightDir1 + V)), 0, 1), gamma);
     vec3 blinn_2 = Cs * pow(clamp(dot(N, normalize(gubo.lightDir2 + V)), 0, 1), gamma);

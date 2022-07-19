@@ -173,7 +173,8 @@ private:
     bool isDeviceSuitable(VkPhysicalDevice device) {
         QueueFamilyIndices indices = findQueueFamilies(device);
 
-        return indices.graphicsFamily.has_value();
+        return indices.isComplete();
+        //return indices.graphicsFamily.has_value();
     }
     
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device) {

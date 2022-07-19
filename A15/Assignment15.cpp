@@ -3048,6 +3048,7 @@ private:
 //glm::mat4 tM = glm::inverse(glm::transpose(ubo.mMat));
 //for(int ti=0;ti<4;ti++){for(int tj=0;tj<4;tj++){std::cout << tM[ti][tj] << " ";}std::cout<<"\n";}std::cout<<"\n";
 
+            
 
 			int i = j * swapChainImages.size() + currentImage;
 			
